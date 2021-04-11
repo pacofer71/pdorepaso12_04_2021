@@ -1,0 +1,7 @@
+; rename .config
+; tus opciones aquí
+[opciones]
+host=tu_host
+usuario=tu_usuario
+base=tu_bbdd
+pass=tu_pass
