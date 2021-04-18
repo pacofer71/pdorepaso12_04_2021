@@ -4,7 +4,7 @@ namespace Clases;
 
 use Clases\Conexion;
 use PDOException;
-
+use PDO;
 class Tags extends Conexion{
     private $id;
     private $categoria;
@@ -45,5 +45,21 @@ class Tags extends Conexion{
         }catch(PDOException $ex){
             die("Error al borrar todos los usuarios: ". $ex->getMessage());
         }
+    }
+    //----------------------------------------------------------------------------------
+    public function arrayIds(){
+        $c = "select id from tags";
+        $stmt=parent::$conexion->prepare($c);
+        try{
+            $stmt->execute();
+        }catch(PDOException $ex){
+
+        }
+        $todosId=[];
+        while($fila=$stmt->fetch(PDO::FETCH_OBJ)){
+            $todosId[]=$fila->id;
+        }
+        return $todosId;
+
     }
 }

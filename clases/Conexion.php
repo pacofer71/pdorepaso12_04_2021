@@ -28,4 +28,7 @@ class Conexion{
         }
 
     }
+    public static function getConexion(){
+        return self::$conexion;
+    }
 }

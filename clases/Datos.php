@@ -16,6 +16,9 @@
                 case "tags": 
                     $this->crearTags($cant);
                     break;    
+                case "posts" :
+                    $this->crearPosts($cant); 
+                    break;    
                 default: 
                     die("Error la tabla NO existe !!!!");
 
@@ -54,6 +57,36 @@
                 $tag->create();
             }
             $tag=null;
+        }
+        //----------------------------------------------------------------------------------------------------------
+        public function crearPosts($c){
+            $idUsers=(new Users())->arrayIds();
+            $idTags=(new Tags())->arrayIds();
+            //var_dump($idUsers);
+            //echo "<br>";
+            //var_dump($idTags);
+            //die();
+            $post=new Posts();
+            $post->deleteAll();
+            for($i=0; $i<$c; $i++){
+                $post->setTitulo($this->faker->word());
+                $post->setCuerpo($this->faker->text($maxNbChars = 200));
+                $post->setIdUser($idUsers[rand(0, count($idUsers)-1)]);
+                $post->create();
+                
+                $pid=Conexion::getConexion()->lastInsertId();
+                //echo "<br>ID=$pid<br>";
+                $pt=new PostsTemas();
+                for($j=0; $j<rand(1, count($idTags)); $j++){
+                    shuffle($idTags);
+                    $pt->setIdTag($idTags[$j]);
+                    $pt->setIdPost($pid);
+                    $pt->create();
+                }
+
+            }
+            $pt=null;
+            $post=null;
         }
 
 

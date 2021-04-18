@@ -86,6 +86,21 @@ class Users extends Conexion{
 
         $this->mail=$m;
     }
+    public function arrayIds(){
+        $c = "select id from users";
+        $stmt=parent::$conexion->prepare($c);
+        try{
+            $stmt->execute();
+        }catch(PDOException $ex){
+
+        }
+        $todosId=[];
+        while($fila=$stmt->fetch(PDO::FETCH_OBJ)){
+            $todosId[]=$fila->id;
+        }
+        return $todosId;
+
+    }
     //-------------------------------------------------------------------------------------------------------------------------
 
 }

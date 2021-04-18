@@ -13,15 +13,16 @@
         
         $nombre=trim($_POST['username']);
         $pass=trim($_POST['pass']);
-        if(strlen($nombre)!=0 && strlen($pass!=0)){
+        if(strlen($nombre)!=0 && strlen($pass)!=0){
             $usuario=new Users();
             if($usuario->validar($nombre, $pass)){
                 $_SESSION['username']=$nombre;
-                die("exito");
+                header("Location:portal.php");
+                die();
             }
-            else{
-                mostrarError("Nombre o pass incorrecto");
-            }
+            
+            mostrarError("Nombre o pass incorrecto");
+            
 
         }
         else{
@@ -65,13 +66,7 @@
                     <input type="password" class="form-control" id="np" placeholder="Password" name="pass" required>
                 </div>
                 <div class="mt-3">
-                <?php
-                if (isset($_COOKIE['errorV']) && $_COOKIE['errorV'] == 3) {
-                    echo  "<button type='submit' class='btn btn-primary' name='login' disabled><i class='fas fa-sign-in-alt mr-2'></i> Login (Espera 30s.)</button>&nbsp;";
-                } else {
-                    echo  "<button type='submit' class='btn btn-primary' name='login'><i class='fas fa-sign-in-alt mr-2'></i> Login</button>&nbsp;";
-                }
-                ?>
+                    <button type='submit' class='btn btn-primary' name='login'><i class='fas fa-sign-in-alt mr-2'></i> Login</button>&nbsp;
                  <a href='index.php' class='ml-2 btn btn-info'><i class='fas fa-users-slash mr-2'></i> Invitado</a>
                 </div>
             </form>
