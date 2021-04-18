@@ -27,6 +27,6 @@ create table poststemas(
     id int auto_increment primary key,
     idTag int default -1,
     idPost int,
-    constraint reltag foreign key(idTag) references tags(id) on delete set default on update cascade,
+    constraint reltag foreign key(idTag) references tags(id) on delete cascade on update cascade,
     constraint relPost foreign key(idPost) references posts(id) on delete cascade on update cascade
 );

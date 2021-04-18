@@ -15,7 +15,7 @@ echo <<< CADENA
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Posts</a></li>
-            <li><a class="dropdown-item" href="#">Tags</a></li>
+            <li><a class="dropdown-item" href="tags.php">Tags</a></li>
             <li><a class="dropdown-item" href="#">Usuarios</a></li>
             
           </ul>
