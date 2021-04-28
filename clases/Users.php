@@ -65,6 +65,19 @@ class Users extends Conexion{
         return ($fila!=null) ? true : false;
     }
     //---------------------------------------------------------------------------------------------
+    public function devolverIdUser($n){
+        $c="select id from users where username=:un";
+        $stmt=parent::$conexion->prepare($c);
+        try{
+            $stmt->execute([':un'=>$n]);
+        }catch(PDOException $ex){
+            die("Error al comprobar username y pass: ".$ex->getMessage());
+        }
+        return ($stmt->fetch(PDO::FETCH_OBJ))->id;
+        
+
+    }
+    //-----------------------------------------------------------------------------------------------
     public function setId(int $id){
         $this->id=$id;
     }

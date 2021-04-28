@@ -32,6 +32,32 @@ class PostsTemas extends Conexion{
         }
     }
     //-------------------------------------------------------------------------------------------
+    public function devolverIdTag(){
+        $c="select distinct idTag from poststemas where idPost=:ip";
+        $stmt=parent::$conexion->prepare($c);
+        try{
+            $stmt->execute([':ip'=>$this->idPost]);
+        }catch(PDOException $ex){
+            die("error al relacionar tags de un posts: ".$ex->getMessage());
+        }
+        $tags=[];
+        while($fila=$stmt->fetch(PDO::FETCH_OBJ)){
+            $tags[]=$fila->idTag;
+        }
+        return $tags;
+    }
+    //-------------------------------------------------------------------------------------------
+    public function resetearIdPost(){
+        $c="delete from poststemas where idPost=:ip";
+        $stmt=parent::$conexion->prepare($c);
+        try{
+            $stmt->execute([':ip'=>$this->idPost]);
+        }catch(PDOException $ex){
+            die("error al relacionar tags de un posts: ".$ex->getMessage());
+        }
+
+    }
+    //------------------------------------------------------------------------------------------
     /**
      * Set the value of idTag
      *

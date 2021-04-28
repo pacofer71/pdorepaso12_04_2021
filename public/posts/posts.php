@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <?php
 session_start();
-if (!isset($_SESSION['username']) || $_SESSION['username'] != "admin") {
+if (!isset($_SESSION['username'])) {
     header("Location:login.php");
     die();
 }
-require '../vendor/autoload.php';
+//echo __DIR__ ;
+//die();
+require_once dirname(__DIR__, 2)."/vendor/autoload.php";
 
-use Clases\Tags;
+use Clases\Posts;
 
-$temas = new Tags();
-$todos = $temas->readAll();
-$temas = null;
+$posts = new Posts();
+$todos = $posts->readAll();
+$posts = null;
 ?>
 <html lang="es">
 
@@ -29,32 +31,38 @@ $temas = null;
 
 <body style="background-color: bisque;">
     <?php
-    require "resources/nav.php";
+    require "../resources/nav.php";
     ?>
-    <h3 class="text-center mt-3">Tags</h3>
+    <h3 class="text-center mt-3">Posts</h3>
 
     <div class="container mt-3 mb-4">
-     <?php require './resources/mensajes.php'; ?>
-        <a href="crearTag.php" class="btn btn-success my-3"><i class="fas fa-plus"></i> Crear Tema</a>
+     <?php require '../resources/mensajes.php'; ?>
+        <a href="crearPost.php" class="btn btn-success my-3"><i class="fas fa-plus"></i> Nuevo Post</a>
         <table class="table table-success table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Código</th>
-                    <th scope="col" class='text-center'>Nombre</th>
-                    <th scope="col" class='text-center'>Acciones</th>
+                    <th scope="col">Detalles</th>
+                    <th scope="col" class='text-center'>Titulo</th>
+                    <th scope="col" class='text-center'>Contenido</th>
+                    <th scope="col" class='text-center'>Usuario</th>
+                    <th scope="col" class='text-center' colspan=2>Acciones</th>
+
 
                 </tr>
             </thead>
             <tbody>
                 <?php
                 while ($fila = $todos->fetch(PDO::FETCH_OBJ)) {
-                    echo "<tr>";
-                    echo "<th scope='row'>$fila->id</th>";
-                    echo "<td class='text-center'>$fila->categoria</td>";
+                    echo "<tr class='align-middle'>";
+                    echo "<th scope='row'> <a href='detallePost.php?id={$fila->id}' class='btn btn-primary'>Detalles</a></th>";
+                    echo "<td class='text-center'>$fila->titulo</td>";
+                    echo "<td class='text-justify'>$fila->cuerpo</td>";
+                    echo "<td class='text-center'>$fila->username</td>";
+                    echo "<td>";
+                    echo "<a href='editarPost.php?id={$fila->id}' class='btn btn-warning'><i class='far fa-edit'></i> Editar</a>";
                     echo "<td class='text-center'>";
                     echo <<< CADENA
-                    <form name="a" method="POST" action="borrarTag.php" class="inline">
-                    <a href="editarTag.php?id={$fila->id}" class="btn btn-warning"><i class="far fa-edit"></i> Editar</a>&nbsp;
+                    <form name="a" method="POST" action="borrarPost.php" class="inline">
                     <input type="hidden" name="id" value="{$fila->id}" />
                     <button type="submit" class="btn btn-danger" onsubmit="return confirm('Borrar Tag')"><i class="fas fa-trash-alt"></i> Borrar</button>
                     </form>

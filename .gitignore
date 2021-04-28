@@ -2,4 +2,4 @@
 /.vscode
 /.git
 .config
-composer.lock
+./composer.lock

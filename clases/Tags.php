@@ -36,9 +36,31 @@ class Tags extends Conexion
     }
     public function read()
     {
+        $c="select * from tags where id=:i";
+        $stmt=parent::$conexion->prepare($c);
+        try{
+            $stmt->execute([
+                ':i'=>$this->id
+            ]);
+        }catch(PDOException $ex){
+            die("Error al devolver un tags: ". $ex->getMessage());
+        }
+        $fila=$stmt->fetch(PDO::FETCH_OBJ);
+        return $fila->categoria;
     }
     public function update()
     {
+        $u="update tags  set categoria=:c where id=:i";
+        $stmt=parent::$conexion->prepare($u);
+        try{
+            $stmt->execute([
+                ':i'=>$this->id,
+                ':c'=>$this->categoria
+            ]);
+        }catch(PDOException $ex){
+            die("Error al editar un tags: ". $ex->getMessage());
+        }
+
     }
     public function delete()
     {
@@ -86,5 +108,19 @@ class Tags extends Conexion
             $todosId[] = $fila->id;
         }
         return $todosId;
+    }
+    public function existeTag($tag){
+        $c="select * from tags where categoria=:c";
+        $stmt=parent::$conexion->prepare($c);
+        try{
+            $stmt->execute([
+                ':c'=>$tag
+            ]);
+        }catch(PDOException $ex){
+            die("Error al comprobar existencia tag: ". $ex->getMessage());
+        }
+        $fila=$stmt->fetch(PDO::FETCH_OBJ);
+        return ($fila==null) ? false : true;
+
     }
 }

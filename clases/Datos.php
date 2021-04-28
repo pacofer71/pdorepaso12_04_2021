@@ -1,6 +1,6 @@
 <?php
     namespace Clases;
-    require '../vendor/autoload.php';
+   // require '../vendor/autoload.php';
     use Faker\Factory;
     
     class Datos{

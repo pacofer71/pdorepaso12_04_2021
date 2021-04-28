@@ -13,7 +13,8 @@ class Conexion{
         }    
     }
     private static function crearConexion(){
-        $opciones=parse_ini_file("../.config");
+       
+        $opciones=parse_ini_file(dirname(__DIR__)."/.config");
         $base=$opciones["base"];
         $pass=$opciones["pass"];
         $user=$opciones["usuario"];
