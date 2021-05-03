@@ -2,6 +2,7 @@
 <?php
 session_start();
 require '../vendor/autoload.php';
+use Clases\Navegar;
 ?>
 <html lang="es">
 
@@ -19,7 +20,8 @@ require '../vendor/autoload.php';
 
 <body style="background-color: bisque;">
     <?php
-    require "resources/nav.php";
+        $nav=new Navegar($_SESSION['username']);
+        $nav->pintarNav("public");
     ?>
     <h3 class="text-center mt-3">Posts S.A.</h3>
 

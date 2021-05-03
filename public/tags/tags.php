@@ -2,12 +2,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['username'] != "admin") {
-    header("Location:login.php");
+    header("Location:../login.php");
     die();
 }
-require '../vendor/autoload.php';
 
-use Clases\Tags;
+require_once dirname(__DIR__, 2)."/vendor/autoload.php";
+use Clases\{Tags, Navegar};
 
 $temas = new Tags();
 $todos = $temas->readAll();
@@ -29,12 +29,13 @@ $temas = null;
 
 <body style="background-color: bisque;">
     <?php
-    require "resources/nav.php";
+          $nav=new Navegar($_SESSION['username']);
+          $nav->pintarNav("tags");
     ?>
     <h3 class="text-center mt-3">Tags</h3>
 
     <div class="container mt-3 mb-4">
-     <?php require './resources/mensajes.php'; ?>
+     <?php require '../resources/mensajes.php'; ?>
         <a href="crearTag.php" class="btn btn-success my-3"><i class="fas fa-plus"></i> Crear Tema</a>
         <table class="table table-success table-striped">
             <thead>

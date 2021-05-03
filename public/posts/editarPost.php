@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location:login.php");
+    header("Location:../login.php");
 }
 if (!isset($_GET['id'])) {
     header('Location:posts.php');
@@ -9,7 +9,7 @@ if (!isset($_GET['id'])) {
 }
 require_once dirname(__DIR__, 2) . "/vendor/autoload.php";
 
-use Clases\{Conexion, Posts, Tags, PostsTemas, Users};
+use Clases\{Conexion, Posts, Tags, PostsTemas, Users, Navegar};
 
 function mostrarError($txt)
 {
@@ -82,7 +82,8 @@ if (isset($_POST['editar'])) {
 
     <body style="background-color: bisque;">
         <?php
-        require '../resources/nav.php';
+              $nav=new Navegar($_SESSION['username']);
+              $nav->pintarNav("posts");
         ?>
         <h3 class="text-center mt-3">Editar Post</h3>
         <div class="container mt-3">

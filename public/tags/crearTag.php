@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location:login.php");
+    header("Location:../login.php");
 }
-require '../vendor/autoload.php';
+require_once dirname(__DIR__, 2)."/vendor/autoload.php";
 
-use Clases\Tags;
+use Clases\{Tags, Navegar};
 
 if (isset($_POST['crear'])) {
     //procesamos el form
@@ -49,12 +49,13 @@ if (isset($_POST['crear'])) {
 
     <body style="background-color: bisque;">
         <?php
-        require 'resources/nav.php';
+              $nav=new Navegar($_SESSION['username']);
+              $nav->pintarNav("tags");
         ?>
         <h3 class="text-center mt-3">Crear Tag</h3>
         <div class="container mt-3">
             <?php
-            require 'resources/mensajes.php';
+            require '../resources/mensajes.php';
             ?>
             <form name="nt" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                 <div class="mt-2">

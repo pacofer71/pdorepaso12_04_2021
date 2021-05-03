@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location:login.php");
+    header("Location:../login.php");
     die();
 }
 if(!isset($_GET['id'])){
@@ -9,8 +9,8 @@ if(!isset($_GET['id'])){
     die();
 }
 
-require '../vendor/autoload.php';
-use Clases\Tags;
+require_once dirname(__DIR__, 2)."/vendor/autoload.php";
+use Clases\{Tags, Navegar};
 $id=$_GET['id'];
 $esteTag=new Tags();
 $esteTag->setId($id);
@@ -72,12 +72,13 @@ else{
 
 <body style="background-color: bisque;">
     <?php
-    require 'resources/nav.php';
+          $nav=new Navegar($_SESSION['username']);
+          $nav->pintarNav("tags");
     ?>
     <h3 class="text-center mt-3">Editar Tag</h3>
     <div class="container mt-3">
     <?php
-        require 'resources/mensajes.php';
+        require '../resources/mensajes.php';
     ?>
     <!-- OJO hay que volver a poner en el action la variable por GET -->
     <form name="nt" action="<?php echo $_SERVER['PHP_SELF']."?id=$id"; ?>" method="POST">

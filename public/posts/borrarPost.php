@@ -1,10 +1,11 @@
 <?php
+//die("Location:../login.php");
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['username'] != "admin" || !isset($_POST['id'])) {
-    header("Location:login.php");
+    header("Location:../login.php");
     die();
 }
-require '../vendor/autoload.php';
+require_once dirname(__DIR__, 2)."/vendor/autoload.php";
 
 use Clases\Posts;
 $post = new Posts();

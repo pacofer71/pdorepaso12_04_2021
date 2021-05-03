@@ -2,20 +2,20 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['username'] != "admin") {
-    header("Location:login.php");
+    header("Location:../login.php");
     die();
 }
-if(!isset($_GET['cat'])){
+if(!isset($_GET['username'])){
     header("Location:posts.php");
     die();
 }
-require '../vendor/autoload.php';
+require dirname(__DIR__, 2)."/vendor/autoload.php";
 
 use Clases\Posts;
-$cat=$_GET['cat'];
+$username=$_GET['username'];
 
 $posts = new Posts();
-$todos = $posts->postsPorTag($cat);
+$todos = $posts->postsPorUsuario($username);
 $posts = null;
 ?>
 <html lang="es">
@@ -34,20 +34,20 @@ $posts = null;
 
 <body style="background-color: bisque;">
     <?php
-    require "resources/nav.php";
+    require "../resources/nav.php";
     ?>
-    <h3 class="text-center mt-3">Posts de <?php echo $cat ?></h3>
+    <h3 class="text-center mt-3">Posts de: <?php echo $username ?></h3>
 
     <div class="container mt-3 mb-4">
-     <?php require './resources/mensajes.php'; ?>
-     <a href="javascript:history.back(-1);" class="btn btn-success my-3"><i class="fas fa-backward"></i> Volver</a>
+     <?php require '../resources/mensajes.php'; ?>
+        <a href="javascript:history.back(-1);" class="btn btn-success my-3"><i class="fas fa-backward"></i> Volver</a>
         <table class="table table-success table-striped">
             <thead>
                 <tr>
                     <th scope="col">Detalles</th>
                     <th scope="col" class='text-center'>Titulo</th>
                     <th scope="col" class='text-center'>Contenido</th>
-                    <th scope="col" class='text-center'>Usuario</th>
+                    <th scope="col" class='text-center'>Catgegoría</th>
                     <th scope="col" class='text-center' colspan=2>Acciones</th>
 
 
@@ -60,7 +60,7 @@ $posts = null;
                     echo "<th scope='row'> <a href='detallePost.php?id={$fila->id}' class='btn btn-primary'>Detalles</a></th>";
                     echo "<td class='text-center'>$fila->titulo</td>";
                     echo "<td class='text-justify'>$fila->cuerpo</td>";
-                    echo "<td class='text-center'>$fila->username</td>";
+                    echo "<td class='text-center'>$fila->categoria</td>";
                     echo "<td>";
                     echo "<a href='editarPost.php?id={$fila->id}' class='btn btn-warning'><i class='far fa-edit'></i> Editar</a>";
                     echo "<td class='text-center'>";

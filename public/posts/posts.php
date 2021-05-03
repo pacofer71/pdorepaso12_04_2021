@@ -2,14 +2,14 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location:login.php");
+    header("Location:../login.php");
     die();
 }
 //echo __DIR__ ;
 //die();
 require_once dirname(__DIR__, 2)."/vendor/autoload.php";
 
-use Clases\Posts;
+use Clases\{Posts, Navegar};
 
 $posts = new Posts();
 $todos = $posts->readAll();
@@ -31,7 +31,8 @@ $posts = null;
 
 <body style="background-color: bisque;">
     <?php
-    require "../resources/nav.php";
+          $nav=new Navegar($_SESSION['username']);
+          $nav->pintarNav("posts");
     ?>
     <h3 class="text-center mt-3">Posts</h3>
 

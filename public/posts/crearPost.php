@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location:login.php");
+    header("Location:../login.php");
 }
 require_once dirname(__DIR__, 2)."/vendor/autoload.php";
 
-use Clases\{Conexion, Posts, Tags, PostsTemas, Users};
+use Clases\{Conexion, Posts, Tags, PostsTemas, Users, Navegar};
 function mostrarError($txt){
     $_SESSION['mensaje']=$txt;
     header("Location:{$_SERVER['PHP_SELF']}");
@@ -72,7 +72,8 @@ else{
 
 <body style="background-color: bisque;">
     <?php
-    require dirname(__DIR__).'/resources/nav.php';
+      $nav=new Navegar($_SESSION['username']);
+      $nav->pintarNav("posts");
     ?>
     <h3 class="text-center mt-3">Post Nuevo</h3>
     <div class="container mt-3">
